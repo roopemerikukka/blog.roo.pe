@@ -1,7 +1,7 @@
 services:
   wordpress:
     image: wordpress:php8.1-fpm-alpine
-    mem_limit: 100m
+    mem_limit: 256m
     container_name: wordpress
     network_mode: bridge
     restart: always
@@ -19,7 +19,7 @@ services:
 
   db:
     image: mysql:8.0
-    mem_limit: 200m
+    mem_limit: 256m
     container_name: wordpress-db
     network_mode: bridge
     restart: always
