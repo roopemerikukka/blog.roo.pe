@@ -8,6 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      WORDPRESS_DB_USER: ${{ secrets.WORDPRESS_DB_USER }}
+      WORDPRESS_DB_PASSWORD: ${{ secrets.WORDPRESS_DB_PASSWORD }}
+      WORDPRESS_DB_NAME: ${{ secrets.WORDPRESS_DB_NAME }}
+      DOMAIN: blog.roo.pe
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,4 +36,5 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             cd ~/blog.roo.pe/
+            touch .env
             docker compose up -d
