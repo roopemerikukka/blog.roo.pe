@@ -37,4 +37,9 @@ jobs:
           envs: WORDPRESS_DB_USER,WORDPRESS_DB_PASSWORD,WORDPRESS_DB_NAME,DOMAIN
           script: |
             cd ~/blog.roo.pe/
+            touch .env
+            echo "WORDPRESS_DB_USER=$WORDPRESS_DB_USER" >> .env
+            echo "WORDPRESS_DB_PASSWORD=$WORDPRESS_DB_PASSWORD" >> .env
+            echo "WORDPRESS_DB_NAME=$WORDPRESS_DB_NAME" >> .env
+            echo "DOMAIN=$DOMAIN" >> .env
             docker compose up -d
