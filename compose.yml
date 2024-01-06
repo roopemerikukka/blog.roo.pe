@@ -1,6 +1,7 @@
 services:
   wordpress:
     image: wordpress
+    mem_limit: 100m
     container_name: wordpress
     network_mode: bridge
     restart: always
@@ -17,11 +18,10 @@ services:
       LETSENCRYPT_HOST: ${DOMAIN}
     volumes:
       - wordpress:/var/www/html
-    env_file:
-      - .env
 
   db:
     image: mysql:8.0
+    mem_limit: 100m
     container_name: wordpress-db
     network_mode: bridge
     restart: always
@@ -32,8 +32,6 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - wordpress-db:/var/lib/mysql
-    env_file:
-      - .env
 
 volumes:
   wordpress:
