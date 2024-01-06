@@ -1,0 +1,40 @@
+services:
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    network_mode: bridge
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      VIRTUAL_HOST: ${DOMAIN}
+      LETSENCRYPT_HOST: ${DOMAIN}
+    volumes:
+      - wordpress:/var/www/html
+    env_file:
+      - .env
+
+  db:
+    image: mysql:8.0
+    container_name: wordpress-db
+    network_mode: bridge
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
+      MYSQL_USER: ${WORDPRESS_DB_USER}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - wordpress-db:/var/lib/mysql
+    env_file:
+      - .env
+
+volumes:
+  wordpress:
+  wordpress-db:
