@@ -34,7 +34,7 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
+          envs: WORDPRESS_DB_USER,WORDPRESS_DB_PASSWORD,WORDPRESS_DB_NAME,DOMAIN
           script: |
             cd ~/blog.roo.pe/
-            touch .env
             docker compose up -d
