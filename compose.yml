@@ -9,11 +9,14 @@ services:
       - db
     links:
       - db
+      - redis
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_REDIS_HOST', 'redis' );
     volumes:
       - wordpress:/var/www/html
       - ./config/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
@@ -32,6 +35,12 @@ services:
     volumes:
       - wordpress-db:/var/lib/mysql
       - ./config/custom.cnf:/etc/mysql/conf.d/custom.cnf:ro
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: wordpress-redis
+    network_mode: bridge
+    restart: always
 
   nginx:
     image: nginx:1.25
