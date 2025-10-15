@@ -2,8 +2,7 @@ services:
   wordpress:
     image: wordpress:php8.1-fpm-alpine
     mem_limit: 256m
-    container_name: wordpress
-    network_mode: bridge
+    container_name: roope-blog-wordpress
     restart: always
     depends_on:
       - db
@@ -24,8 +23,7 @@ services:
   db:
     image: mysql:8.0
     mem_limit: 256m
-    container_name: wordpress-db
-    network_mode: bridge
+    container_name: roope-blog-wordpress-db
     restart: always
     environment:
       MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
@@ -38,14 +36,12 @@ services:
 
   redis:
     image: redis:7.2-alpine
-    container_name: wordpress-redis
-    network_mode: bridge
+    container_name: roope-blog-wordpress-redis
     restart: always
 
   nginx:
     image: nginx:1.25
-    container_name: wordpress-nginx
-    network_mode: bridge
+    container_name: roope-blog-wordpress-nginx
     restart: always
     environment:
       VIRTUAL_HOST: ${DOMAIN}
@@ -59,3 +55,8 @@ services:
 volumes:
   wordpress:
   wordpress-db:
+
+networks:
+  default:
+    external: true
+    name: polarix
