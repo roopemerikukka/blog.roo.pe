@@ -19,7 +19,8 @@ services:
     volumes:
       - wordpress:/var/www/html
       - ./config/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
-			- ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
+
   db:
     image: mysql:8.0
     mem_limit: 256m
